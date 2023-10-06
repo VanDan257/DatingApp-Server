@@ -71,7 +71,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:44400"));
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();

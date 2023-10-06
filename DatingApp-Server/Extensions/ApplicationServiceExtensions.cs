@@ -20,7 +20,7 @@ namespace DatingApp_Server.Extensions
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOrigins",
+                options.AddDefaultPolicy(
                     builder =>
                     {
                         builder.AllowAnyOrigin()
