@@ -1,4 +1,5 @@
-﻿using DatingApp_Server.Data;
+﻿using AutoMapper;
+using DatingApp_Server.Data;
 using DatingApp_Server.DTOs;
 using DatingApp_Server.Entities;
 using DatingApp_Server.Interfaces;
@@ -13,11 +14,12 @@ namespace DatingApp_Server.Controllers
     [AllowAnonymous]
     public class AccountController : BaseApiController
     {
+        private readonly IMapper _mapper;
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context, ITokenService tokenService)
+        public AccountController(DataContext context, ITokenService tokenService, IMapper mapper)
         {
-
+            _mapper = mapper;
             _context = context;
             _tokenService = tokenService;
         }
@@ -25,18 +27,29 @@ namespace DatingApp_Server.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (await UserExist(registerDto.username))
+            if (await UserExist(registerDto.Username))
             {
                 return BadRequest("User is taken!");
             }
 
             using var hmac = new HMACSHA512();
 
+            //var user = _mapper.Map<AppUser>(registerDto);
+
+            //user.UserName = registerDto.Username;
+            //user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
+            //user.PasswordSalt = hmac.Key;
+
             var user = new AppUser
             {
-                UserName = registerDto.username,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.password)),
-                PasswordSalt = hmac.Key
+                UserName = registerDto.Username,
+                KnownAs = registerDto.KnownAs,
+                DateOfBirth = registerDto.DateOfBirth,
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                PasswordSalt = hmac.Key,
+                City = registerDto.City,
+                Country = registerDto.Country,
+                Gender = registerDto.Gender
             };
 
             _context.Users.Add(user);
@@ -45,7 +58,8 @@ namespace DatingApp_Server.Controllers
             return new UserDto
             {
                 UserName = user.UserName,
-                Token = _tokenService.CresteToken(user)
+                Token = _tokenService.CresteToken(user),
+                KnownAs = user.KnownAs
             };
         }
 
@@ -78,7 +92,8 @@ namespace DatingApp_Server.Controllers
             {
                 UserName = user.UserName,
                 Token = _tokenService.CresteToken(user),
-                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+                KnownAs = user.KnownAs
             };
         }
     }
