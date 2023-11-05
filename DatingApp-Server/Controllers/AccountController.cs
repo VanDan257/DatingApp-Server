@@ -59,7 +59,8 @@ namespace DatingApp_Server.Controllers
             {
                 UserName = user.UserName,
                 Token = _tokenService.CresteToken(user),
-                KnownAs = user.KnownAs
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
 
@@ -93,7 +94,8 @@ namespace DatingApp_Server.Controllers
                 UserName = user.UserName,
                 Token = _tokenService.CresteToken(user),
                 PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-                KnownAs = user.KnownAs
+                KnownAs = user.KnownAs,
+                Gender = user.Gender
             };
         }
     }
