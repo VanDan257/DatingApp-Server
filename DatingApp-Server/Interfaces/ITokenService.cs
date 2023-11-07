@@ -1,6 +1,6 @@
-﻿using DatingApp_Server.Entities;
+﻿using Models.Entities;
 
-namespace DatingApp_Server.Interfaces
+namespace AppChat_Server.Interfaces
 {
     public interface ITokenService
     {

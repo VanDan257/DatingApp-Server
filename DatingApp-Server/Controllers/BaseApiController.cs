@@ -1,7 +1,7 @@
-﻿using DatingApp_Server.Helpers;
+﻿using AppChat_Server.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DatingApp_Server.Controllers
+namespace AppChat_Server.Controllers
 {
     [ServiceFilter(typeof(LogUserActivity))]
     [Route("api/[controller]")]

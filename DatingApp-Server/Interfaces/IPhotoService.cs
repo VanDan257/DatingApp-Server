@@ -1,6 +1,6 @@
 ﻿using CloudinaryDotNet.Actions;
 
-namespace DatingApp_Server.Interfaces
+namespace AppChat_Server.Interfaces
 {
     public interface IPhotoService
     {

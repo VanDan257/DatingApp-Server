@@ -1,7 +1,7 @@
-using DatingApp_Server.Data;
-using DatingApp_Server.Extensions;
-using DatingApp_Server.Middleware;
-using Microsoft.EntityFrameworkCore;
+using AppChat_Server.Extensions;
+using AppChat_Server.Middleware;
+using DatingApp_Server.ChatHub;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,11 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
-builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddApplicationServices(builder);
 
 builder.Services.AddIdentityServices(builder.Configuration);
 
@@ -56,6 +52,8 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -64,6 +62,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapPost("broadcast", async (string message, IHubContext<ChatHub, IChatClient> context) =>
+{
+    await context.Clients.All.ReceiveMessage(message);
+
+    return Results.NoContent();
+});
+
+app.MapHub<ChatHub>("chat-hub");
 
 app.UseMiddleware<ExceptionMiddleware>();
 
@@ -79,20 +86,20 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-using var scope = app.Services.CreateScope();
-var services = scope.ServiceProvider;
+//using var scope = app.Services.CreateScope();
+//var services = scope.ServiceProvider;
 
-try
-{
-    var context = services.GetRequiredService<DataContext>();
+//try
+//{
+//    var context = services.GetRequiredService<DataContext>();
 
-    await context.Database.MigrateAsync();
-    await Seed.SeedUsers(context);
-}
-catch (Exception ex)
-{
-    var logger = services.GetService<ILogger<Program>>();
-    logger.LogError(ex, "An error occurred during migration");
-}
+//    await context.Database.MigrateAsync();
+//    await Seed.SeedUsers(context);
+//}
+//catch (Exception ex)
+//{
+//    var logger = services.GetService<ILogger<Program>>();
+//    logger.LogError(ex, "An error occurred during migration");
+//}
 
 app.Run();

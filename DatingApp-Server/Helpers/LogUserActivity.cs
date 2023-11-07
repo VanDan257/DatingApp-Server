@@ -1,8 +1,8 @@
-﻿using DatingApp_Server.Extensions;
-using DatingApp_Server.Interfaces;
+﻿using AppChat_Server.Extensions;
+using AppChat_Server.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace DatingApp_Server.Helpers
+namespace AppChat_Server.Helpers
 {
     public class LogUserActivity : IAsyncActionFilter
     {

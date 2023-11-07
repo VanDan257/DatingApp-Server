@@ -1,10 +1,10 @@
 ﻿using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
-using DatingApp_Server.Helpers;
-using DatingApp_Server.Interfaces;
+using AppChat_Server.Helpers;
+using AppChat_Server.Interfaces;
 using Microsoft.Extensions.Options;
 
-namespace DatingApp_Server.Service
+namespace AppChat_Server.Service
 {
     public class PhotoService : IPhotoService
     {

@@ -1,15 +1,15 @@
-﻿using AutoMapper;
-using DatingApp_Server.Data;
-using DatingApp_Server.DTOs;
-using DatingApp_Server.Entities;
-using DatingApp_Server.Interfaces;
+﻿using AppChat_Server.DTOs;
+using AppChat_Server.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Models.Data;
+using Models.Entities;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DatingApp_Server.Controllers
+namespace AppChat_Server.Controllers
 {
     [AllowAnonymous]
     public class AccountController : BaseApiController
@@ -27,9 +27,9 @@ namespace DatingApp_Server.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if (await UserExist(registerDto.Username))
+            if (await UserExist(registerDto.Email))
             {
-                return BadRequest("User is taken!");
+                return BadRequest("Email is taken!");
             }
 
             using var hmac = new HMACSHA512();
@@ -42,9 +42,10 @@ namespace DatingApp_Server.Controllers
 
             var user = new AppUser
             {
+                Email = registerDto.Email,
                 UserName = registerDto.Username,
-                KnownAs = registerDto.KnownAs,
                 DateOfBirth = registerDto.DateOfBirth,
+                Created = DateTime.Now,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key,
                 City = registerDto.City,
@@ -59,7 +60,6 @@ namespace DatingApp_Server.Controllers
             {
                 UserName = user.UserName,
                 Token = _tokenService.CresteToken(user),
-                KnownAs = user.KnownAs,
                 Gender = user.Gender
             };
         }
@@ -72,7 +72,7 @@ namespace DatingApp_Server.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _context.Users
-                .Include(p => p.Photos)
+                //.Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
 
             if (user == null)
@@ -93,8 +93,7 @@ namespace DatingApp_Server.Controllers
             {
                 UserName = user.UserName,
                 Token = _tokenService.CresteToken(user),
-                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-                KnownAs = user.KnownAs,
+                PhotoUrl = user.PhotoUrl,
                 Gender = user.Gender
             };
         }

@@ -1,9 +1,9 @@
-﻿using DatingApp_Server.Data;
-using DatingApp_Server.Entities;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.Data;
+using Models.Entities;
 
-namespace DatingApp_Server.Controllers
+namespace AppChat_Server.Controllers
 {
     public class BuggyController : BaseApiController
     {

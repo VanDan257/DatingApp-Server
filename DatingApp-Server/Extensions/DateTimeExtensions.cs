@@ -1,4 +1,4 @@
-﻿namespace DatingApp_Server.Extensions
+﻿namespace AppChat_Server.Extensions
 {
     public static class DateTimeExtensions
     {

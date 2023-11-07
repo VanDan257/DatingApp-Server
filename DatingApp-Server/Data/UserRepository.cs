@@ -1,12 +1,13 @@
-﻿using AutoMapper;
+﻿using AppChat_Server.DTOs;
+using AppChat_Server.Helpers;
+using AppChat_Server.Interfaces;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using DatingApp_Server.DTOs;
-using DatingApp_Server.Entities;
-using DatingApp_Server.Helpers;
-using DatingApp_Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Models.Data;
+using Models.Entities;
 
-namespace DatingApp_Server.Data
+namespace AppChat_Server.Data
 {
     public class UserRepository : IUserRepository
     {
@@ -57,14 +58,14 @@ namespace DatingApp_Server.Data
         public async Task<AppUser> GetUserByNameAsync(string name)
         {
             return await _context.Users
-                .Include(x => x.Photos)
+                .Include(x => x.PhotoUrl)
                 .FirstOrDefaultAsync(x => x.UserName == name);
         }
 
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users
-                .Include(x => x.Photos)
+                .Include(x => x.PhotoUrl)
                 .ToListAsync();
         }
 

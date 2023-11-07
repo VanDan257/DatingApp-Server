@@ -1,4 +1,4 @@
-﻿namespace DatingApp_Server.DTOs
+﻿namespace AppChat_Server.DTOs
 {
     public class MemberUpdateDto
     {

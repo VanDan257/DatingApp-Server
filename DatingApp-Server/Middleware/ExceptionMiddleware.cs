@@ -1,8 +1,8 @@
-﻿using DatingApp_Server.Errors;
+﻿using AppChat_Server.Errors;
 using System.Net;
 using System.Text.Json;
 
-namespace DatingApp_Server.Middleware
+namespace AppChat_Server.Middleware
 {
     public class ExceptionMiddleware
     {

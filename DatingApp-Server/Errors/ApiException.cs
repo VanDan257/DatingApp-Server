@@ -1,4 +1,4 @@
-﻿namespace DatingApp_Server.Errors
+﻿namespace AppChat_Server.Errors
 {
     public class ApiException
     {

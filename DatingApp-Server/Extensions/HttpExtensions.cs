@@ -1,7 +1,7 @@
-﻿using DatingApp_Server.Helpers;
+﻿using AppChat_Server.Helpers;
 using System.Text.Json;
 
-namespace DatingApp_Server.Extensions
+namespace AppChat_Server.Extensions
 {
     public static class HttpExtensions
     {

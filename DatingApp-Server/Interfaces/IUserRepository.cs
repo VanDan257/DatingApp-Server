@@ -1,8 +1,9 @@
-﻿using DatingApp_Server.DTOs;
-using DatingApp_Server.Entities;
-using DatingApp_Server.Helpers;
+﻿using AppChat_Server.DTOs;
 
-namespace DatingApp_Server.Interfaces
+using AppChat_Server.Helpers;
+using Models.Entities;
+
+namespace AppChat_Server.Interfaces
 {
     public interface IUserRepository
     {

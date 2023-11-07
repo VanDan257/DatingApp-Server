@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace DatingApp_Server.Helpers
+namespace AppChat_Server.Helpers
 {
     public class PagedList<T> : List<T>
     {

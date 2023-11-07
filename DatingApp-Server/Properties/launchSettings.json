@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "DatingApp_Server": {
+    "AppChat_Server": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

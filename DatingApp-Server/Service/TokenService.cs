@@ -1,11 +1,11 @@
-﻿using DatingApp_Server.Entities;
-using DatingApp_Server.Interfaces;
+﻿using AppChat_Server.Interfaces;
 using Microsoft.IdentityModel.Tokens;
+using Models.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace DatingApp_Server.Service
+namespace AppChat_Server.Service
 {
     public class TokenService : ITokenService
     {

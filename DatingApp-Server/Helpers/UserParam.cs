@@ -1,4 +1,4 @@
-﻿namespace DatingApp_Server.Helpers
+﻿namespace AppChat_Server.Helpers
 {
     public class UserParam
     {
