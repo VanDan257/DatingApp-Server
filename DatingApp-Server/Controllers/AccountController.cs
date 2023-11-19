@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DatingApp_Server.Controllers
 {
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public class AccountController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -24,6 +24,7 @@ namespace DatingApp_Server.Controllers
             _tokenService = tokenService;
         }
 
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
@@ -68,9 +69,12 @@ namespace DatingApp_Server.Controllers
         {
             return await _context.Users.AnyAsync(x => x.UserName == username.ToLower());
         }
+
+        [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
+            var users = _context.Users.ToList();
             var user = await _context.Users
                 .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
