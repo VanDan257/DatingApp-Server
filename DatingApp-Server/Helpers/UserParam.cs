@@ -1,6 +1,6 @@
 ﻿namespace DatingApp_Server.Helpers
 {
-    public class UserParam
+    public class PaginationParams
     {
         public const int MaxPageSize = 50;
         public int PageNumber { get; set; } = 1;
@@ -11,6 +11,10 @@
             get => _pageSize;
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
+
+    }
+    public class UserParam : PaginationParams
+    {
 
         public string? CurrentUsername { get; set; }
         public string? Gender { get; set; }

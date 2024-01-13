@@ -6,6 +6,13 @@ namespace DatingApp_Server.Data
 {
     public class LikesRepository : ILikesRepository
     {
+        private DataContext _context;
+
+        public LikesRepository(DataContext context)
+        {
+            _context = context;
+        }
+
         public Task<UserLike> GetUserLike(int sourceUserId, int targetUserId)
         {
             throw new NotImplementedException();
